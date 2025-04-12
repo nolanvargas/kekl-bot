@@ -1,12 +1,31 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
 import {
   joinVoiceChannel,
   VoiceConnectionStatus,
   entersState
 } from '@discordjs/voice';
+
+const commands = [
+  new SlashCommandBuilder()
+    .setName('joinvc')
+    .setDescription('Have the bot join your current voice channel')
+    .toJSON()
+];
+const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+
+try {
+  console.log('Registering slash command...');
+  await rest.put(
+    Routes.applicationCommands(process.env.CLIENT_ID),
+    { body: commands }
+  );
+  console.log('✅ Slash command registered');
+} catch (err) {
+  console.error('Error registering command:', err);
+}
 
 const client = new Client({
   intents: [
