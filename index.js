@@ -23,7 +23,7 @@ client.once('ready', () => {
 
   const targetHour = 11;  // 11 AM PST
   const targetMinute = 8;
-  const channelId = process.env.CHANNEL_ID;
+  const channelId = process.env.GENERAL_CHANNEL_ID;
 
   setInterval(async () => {
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
