@@ -13,16 +13,18 @@ const client = new Client({
     ]
 });
 
+console.log('Starting bot...');
+
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
   
-    const targetHour = 10; // 10 AM (24-hour format)
-    const targetMinute = 50; // 10:30 AM
+    const targetHour = 11; // 10 AM (24-hour format)
+    const targetMinute = 07; // 10:30 AM
     const channelId = process.env.CHANNEL_ID;
   
     // Check every minute
     setInterval(async () => {
-      const now = new Date();
+      const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
       if (now.getHours() === targetHour && now.getMinutes() === targetMinute) {
         const channel = await client.channels.fetch(channelId);
         if (channel) {
