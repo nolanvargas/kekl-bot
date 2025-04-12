@@ -7,6 +7,7 @@ import {
   VoiceConnectionStatus,
   entersState
 } from '@discordjs/voice';
+import { startKEKL } from './kekl.js';
 
 const commands = [
   new SlashCommandBuilder()
@@ -27,37 +28,7 @@ try {
   console.error('Error registering command:', err);
 }
 
-function startVoiceCountdown(channelId, totalSeconds) {
-  let remaining = totalSeconds;
 
-  const interval = setInterval(async () => {
-    const minutes = Math.floor(remaining / 60);
-    const seconds = remaining % 60;
-    const display = `${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
-
-    try {
-      await rest.put(`/channels/${channelId}/voice-status`, {
-        body: { status: `⏳ ${display}` }
-      });
-    } catch (err) {
-      console.error('❌ Failed to update voice status:', err);
-      clearInterval(interval);
-    }
-
-    remaining--;
-
-    if (remaining < 0) {
-      clearInterval(interval);
-      try {
-        await rest.put(`/channels/${channelId}/voice-status`, {
-          body: { status: `✅ Done!` }
-        });
-      } catch (e) {
-        console.error('Failed final status update:', e);
-      }
-    }
-  }, 1000);
-}
 
 const client = new Client({
   intents: [
@@ -87,7 +58,7 @@ client.on('interactionCreate', async interaction => {
       
       await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
       await interaction.reply(`✅ Joined General VC`);
-      startVoiceCountdown(process.env.GENERAL_VC_ID, 60); // 1 minute countdown
+      startKEKL(process.env.GENERAL_VC_ID, rest); // 1 minute countdown
     } catch (err) {
       console.error('Failed to join VC:', err);
       await interaction.reply('❌ Failed to join VC');
