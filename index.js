@@ -2,6 +2,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Client, GatewayIntentBits } from 'discord.js';
+import {
+  joinVoiceChannel,
+  VoiceConnectionStatus,
+  entersState
+} from '@discordjs/voice';
 
 const client = new Client({
   intents: [
@@ -12,11 +17,35 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ]
 });
+client.login(process.env.DISCORD_TOKEN);
 
 client.on('error', console.error);
 client.on('shardError', console.error);
 
-client.login(process.env.DISCORD_TOKEN);
+/////////////////////////////////////////////////////////////
+
+client.on('interactionCreate', async interaction => {
+  if (!interaction.isChatInputCommand()) return;
+  if (interaction.commandName === 'joinvc') {
+  const voiceChannel = interaction.guild.channels.cache.get(process.env.GENERAL_VC_ID);
+    
+    try {
+      const connection = joinVoiceChannel({
+        channelId: process.env.GENERAL_VC_ID,
+        guildId: interaction.guild.id,
+        adapterCreator: interaction.guild.voiceAdapterCreator
+      });
+      
+      await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
+      await interaction.reply(`✅ Joined General VC`);
+    } catch (err) {
+      console.error('Failed to join VC:', err);
+      await interaction.reply('❌ Failed to join VC');
+    }
+  }
+});
+
+/////////////////////////////////////////////////////////////
 
 client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
