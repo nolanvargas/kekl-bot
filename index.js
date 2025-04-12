@@ -17,7 +17,7 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
   
     const targetHour = 10; // 10 AM (24-hour format)
-    const targetMinute = 30; // 10:30 AM
+    const targetMinute = 50; // 10:30 AM
     const channelId = process.env.CHANNEL_ID;
   
     // Check every minute
