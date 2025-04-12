@@ -22,7 +22,7 @@ client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
   const targetHour = 11;  // 11 AM PST
-  const targetMinute = 14;
+  const targetMinute = 23;
   const channelId = process.env.GENERAL_CHANNEL_ID;
 
   setInterval(async () => {
@@ -34,7 +34,7 @@ client.once('ready', () => {
       try {
         const channel = await client.channels.fetch(channelId);
         if (channel) {
-          await channel.send('It’s go time! 🚀');
+          await channel.send('It’s go time in <t:1744482600:R> 🚀');
         }
       } catch (err) {
         console.error('❌ Failed to send message:', err);
