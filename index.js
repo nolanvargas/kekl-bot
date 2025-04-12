@@ -22,7 +22,7 @@ client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
   const targetHour = 11;  // 11 AM PST
-  const targetMinute = 8;
+  const targetMinute = 14;
   const channelId = process.env.GENERAL_CHANNEL_ID;
 
   setInterval(async () => {
