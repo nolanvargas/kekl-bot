@@ -46,8 +46,6 @@ client.on('shardError', console.error);
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
   if (interaction.commandName === 'joinvc') {
-  const voiceChannel = interaction.guild.channels.cache.get(process.env.GENERAL_VC_ID);
-    
     try {
       const connection = joinVoiceChannel({
         channelId: process.env.GENERAL_VC_ID,
@@ -57,6 +55,14 @@ client.on('interactionCreate', async interaction => {
       
       await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
       await interaction.reply(`✅ Joined General VC`);
+      await rest.put(
+        `/channels/${process.env.GENERAL_VC_ID}/voice-status`,
+        {
+          body: {
+            status: '🚀 GO TIME'
+          }
+        }
+      );
     } catch (err) {
       console.error('Failed to join VC:', err);
       await interaction.reply('❌ Failed to join VC');
