@@ -33,3 +33,10 @@ client.once('ready', () => {
   });
 
 client.login(process.env.DISCORD_TOKEN);
+
+// Keep process alive
+setInterval(() => {}, 60 * 60 * 1000); // every 1 hour
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled promise rejection:', err);
+});
