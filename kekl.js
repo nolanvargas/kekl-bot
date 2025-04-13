@@ -1,4 +1,4 @@
-import { playSoundEffect } from "./audio";
+import { playSoundEffect } from "audio.js";
 
 export async function startKEKL(connection, channelId, rest) {
     // const preMap = 60; // 1 minute
