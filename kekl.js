@@ -17,10 +17,10 @@ export async function startKEKL(connection, channelId, rest) {
       'Times Up! Submit your maps'
     ];
     const sounds = [
-      '',
       'begin.mp3',
       'transition.mp3',
-      'endtime.mp3'
+      'endtime.mp3',
+      ''
     ];
     const durations = [preMap, mapping, validating];
   
@@ -45,12 +45,20 @@ export async function startKEKL(connection, channelId, rest) {
           clearInterval(interval);
           return resolve(); // still resolve so flow continues
         }
-  
+        
         time--;
   
+        // manually syncing sounds to the countdown
+        if (sound == 'begin.mp3' && time == 5) {
+          playSoundEffect(connection, channelId, sound).catch(console.error);
+        } else if (sound == 'transition.mp3' && time == 1) {
+          playSoundEffect(connection, channelId, sound).catch(console.error);
+        } else if (sound == 'endtime.mp3' && time == 1) {
+          playSoundEffect(connection, channelId, sound).catch(console.error);
+        }
+
         if (time < 0) {
           clearInterval(interval);
-          playSoundEffect(connection, channelId, sound).catch(console.error);
           resolve();
         }
       }, 1000);

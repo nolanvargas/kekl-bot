@@ -16,6 +16,7 @@ export async function playSoundEffect(connection, channelId, filename) {
     const resource = createAudioResource(path.join(__dirname, 'sounds', filename));
 
     connection.subscribe(player);
+    resource.volume?.setVolume(0.4);
     player.play(resource);
 
     player.on(AudioPlayerStatus.Idle, () => {
