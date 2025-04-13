@@ -1,21 +1,35 @@
-export async function startKEKL(channelId, rest) {
-    const preMap = 60; // 1 minute
-    const mapping = 60 * 15; // 15 minutes
-    const validating = 300; // 5 minutes
+import { playSoundEffect } from "./audio";
+
+export async function startKEKL(connection, channelId, rest) {
+    // const preMap = 60; // 1 minute
+    // const mapping = 60 * 15; // 15 minutes
+    // const validating = 300; // 5 minutes
+    // const timessUp = 0; 
+    const preMap = 6; // 1 minute
+    const mapping = 6; // 15 minutes
+    const validating = 6; // 5 minutes
+    const timessUp = 0; 
   
     const labels = [
       'Launch Map Editor -',
       'Mapping -',
-      'Validating -'
+      'Validating -',
+      'Times Up! Submit your maps'
+    ];
+    const sounds = [
+      '',
+      'begin.mp3',
+      'transition.mp3',
+      'endtime.mp3'
     ];
     const durations = [preMap, mapping, validating];
   
     for (let i = 0; i < labels.length; i++) {
-      await loadStatus(channelId, rest, labels[i], durations[i]);
+      await loadStatus(connection, channelId, rest, labels[i], durations[i], sounds[i]);
     }
   }
   
-  function loadStatus(channelId, rest, label, time) {
+  function loadStatus(connection, channelId, rest, label, time, sound) {
     return new Promise((resolve) => {
       const interval = setInterval(async () => {
         const minutes = Math.floor(time / 60);
@@ -36,6 +50,7 @@ export async function startKEKL(channelId, rest) {
   
         if (time < 0) {
           clearInterval(interval);
+          playSoundEffect(connection, channelId, sound).catch(console.error);
           resolve();
         }
       }, 1000);
