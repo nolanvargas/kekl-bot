@@ -19,7 +19,7 @@ export async function startKEKL(connection, channelId, rest) {
     const sounds = [
       'begin.mp3',
       'transition.mp3',
-      'endtime.mp3',
+      'endTime.mp3',
       ''
     ];
     const durations = [preMap, mapping, validating];
@@ -49,15 +49,13 @@ export async function startKEKL(connection, channelId, rest) {
         time--;
   
         // manually syncing sounds to the countdown
-        if (sound == 'begin.mp3' && time == 3) {
+        if (sound == 'begin.mp3' && time == 2) {
           playSoundEffect(connection, channelId, sound).catch(console.error);
-        } else if (sound == 'transition.mp3' && time == 0) {
+        } else if (sound == 'begin.mp3' && time == 0) {
+          clearInterval(interval);
+          resolve();
+        } else if (time == 0) {
           playSoundEffect(connection, channelId, sound).catch(console.error);
-        } else if (sound == 'endtime.mp3' && time == 0) {
-          playSoundEffect(connection, channelId, sound).catch(console.error);
-        }
-
-        if (time < 0) {
           clearInterval(interval);
           resolve();
         }
