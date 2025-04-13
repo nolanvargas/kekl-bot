@@ -49,11 +49,11 @@ export async function startKEKL(connection, channelId, rest) {
         time--;
   
         // manually syncing sounds to the countdown
-        if (sound == 'begin.mp3' && time == 5) {
+        if (sound == 'begin.mp3' && time == 3) {
           playSoundEffect(connection, channelId, sound).catch(console.error);
-        } else if (sound == 'transition.mp3' && time == 1) {
+        } else if (sound == 'transition.mp3' && time == 0) {
           playSoundEffect(connection, channelId, sound).catch(console.error);
-        } else if (sound == 'endtime.mp3' && time == 1) {
+        } else if (sound == 'endtime.mp3' && time == 0) {
           playSoundEffect(connection, channelId, sound).catch(console.error);
         }
 
