@@ -73,14 +73,14 @@ client.on('interactionCreate', async interaction => {
 
     if (!connection || connection.state.status !== VoiceConnectionStatus.Ready) {
       await interaction.reply({
-      content: '❌ Bot is not connected to a voice channel.',
+      content: '❌ Bot is not connected to a voice channel. Use /joinvc first.',
       ephemeral: true // Only visible to the user
       });
       return;
     }
 
     try {
-      await startKEKL(connection, process.env.GENERAL_VC_ID, rest); // 1 minute countdown
+      startKEKL(connection, process.env.GENERAL_VC_ID, rest); // 1 minute countdown
       await interaction.reply('✅ KEKL countdown started!');
     } catch (err) {
       console.error('Failed to start KEKL:', err);
