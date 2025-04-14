@@ -42,7 +42,8 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.GuildVoiceStates,
-  ]
+  ],
+  partials: ['CHANNEL'], // 👈 Required for DMs!
 });
 client.login(process.env.DISCORD_TOKEN);
 
