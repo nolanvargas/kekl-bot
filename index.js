@@ -8,6 +8,7 @@ import {
   entersState
 } from '@discordjs/voice';
 import { startKEKL } from './kekl.js';
+const { getVoiceConnection } = require('@discordjs/voice');
 
 const commands = [
   new SlashCommandBuilder()
@@ -48,7 +49,6 @@ client.login(process.env.DISCORD_TOKEN);
 client.on('error', console.error);
 client.on('shardError', console.error);
 
-let connection = null;
 
 /////////////////////////////////////////////////////////////
 // Join VC command
@@ -56,7 +56,7 @@ client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
   if (interaction.commandName === 'joinvc') {
     try {
-      connection = joinVoiceChannel({
+      const connection = joinVoiceChannel({
         channelId: process.env.GENERAL_VC_ID,
         guildId: interaction.guild.id,
         adapterCreator: interaction.guild.voiceAdapterCreator
@@ -69,7 +69,9 @@ client.on('interactionCreate', async interaction => {
       await interaction.reply('❌ Failed to join VC');
     }
   } else if (interaction.commandName === 'beginkekl') {
-    if (connection.state.status !== VoiceConnectionStatus.Ready) {
+    const connection = getVoiceConnection(interaction.guild.id);
+
+    if (!connection || connection.state.status !== VoiceConnectionStatus.Ready) {
       await interaction.reply({
       content: '❌ Bot is not connected to a voice channel.',
       ephemeral: true // Only visible to the user
