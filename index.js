@@ -115,40 +115,52 @@ client.once('ready', () => {
   }, 60 * 1000);
 });
 
-/////////////////////////////////////////////////////////////
-
 client.on('messageCreate', async (message) => {
-  console.dir(message)
-  // Ignore messages from bots
   if (message.author.bot) return;
 
-  // Only process DMs
-  if (message.channel.type !== 1) return; // 1 = DM
+  console.log('📨 Message received!');
+  console.log('Channel type:', message.channel.type);
 
-  // Check for attachments
-  if (message.attachments.size === 0) {
-    await message.reply('❌ Please send a map file as an attachment.');
-    return;
+  if (message.channel.type === 1) { // 1 = DMChannel
+    console.log(`📩 DM from ${message.author.tag}: ${message.content}`);
   }
-
-  // Check file type
-  const attachment = message.attachments.first();
-  const fileName = attachment.name || '';
-  if (!fileName.endsWith('.Map.Gbx')) {
-    await message.reply('❌ Invalid file type. Please upload a `.Map.Gbx` file.');
-    return;
-  }
-
-  // Download the file (use HTTPS module or axios, example below)
-  const fileUrl = attachment.url;
-  console.log(`Received map from ${message.author.tag}: ${fileName}`);
-  console.log(`URL: ${fileUrl}`);
-
-  // Optional: acknowledge receipt
-  await message.reply('Thanks');
-
-  // Optional: store metadata or download file here
 });
+
+
+/////////////////////////////////////////////////////////////
+
+// client.on('messageCreate', async (message) => {
+//   console.dir(message)
+//   // Ignore messages from bots
+//   if (message.author.bot) return;
+
+//   // Only process DMs
+//   if (message.channel.type !== 1) return; // 1 = DM
+
+//   // Check for attachments
+//   if (message.attachments.size === 0) {
+//     await message.reply('❌ Please send a map file as an attachment.');
+//     return;
+//   }
+
+//   // Check file type
+//   const attachment = message.attachments.first();
+//   const fileName = attachment.name || '';
+//   if (!fileName.endsWith('.Map.Gbx')) {
+//     await message.reply('❌ Invalid file type. Please upload a `.Map.Gbx` file.');
+//     return;
+//   }
+
+//   // Download the file (use HTTPS module or axios, example below)
+//   const fileUrl = attachment.url;
+//   console.log(`Received map from ${message.author.tag}: ${fileName}`);
+//   console.log(`URL: ${fileUrl}`);
+
+//   // Optional: acknowledge receipt
+//   await message.reply('Thanks');
+
+//   // Optional: store metadata or download file here
+// });
 
 
 
