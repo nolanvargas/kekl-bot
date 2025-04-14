@@ -118,6 +118,7 @@ client.once('ready', () => {
 /////////////////////////////////////////////////////////////
 
 client.on('messageCreate', async (message) => {
+  console.dir(message)
   // Ignore messages from bots
   if (message.author.bot) return;
 
