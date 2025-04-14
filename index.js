@@ -13,6 +13,10 @@ const commands = [
   new SlashCommandBuilder()
     .setName('joinvc')
     .setDescription('Have the bot join your current voice channel')
+    .toJSON(),
+  new SlashCommandBuilder()
+    .setName('beginkekl')
+    .setDescription('Start the KEKL countdown in the current voice channel')
     .toJSON()
 ];
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
@@ -58,13 +62,33 @@ client.on('interactionCreate', async interaction => {
       
       await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
       await interaction.reply(`✅ Joined General VC`);
-      startKEKL(connection, process.env.GENERAL_VC_ID, rest); // 1 minute countdown
     } catch (err) {
       console.error('Failed to join VC:', err);
       await interaction.reply('❌ Failed to join VC');
     }
-  }
-});
+  } else if (interaction.commandName === 'beginkekl') {
+    const connection = joinVoiceChannel({
+      channelId: process.env.GENERAL_VC_ID,
+      guildId: interaction.guild.id,
+      adapterCreator: interaction.guild.voiceAdapterCreator
+    });
+
+    if (connection.state.status !== VoiceConnectionStatus.Ready) {
+      await interaction.reply({
+      content: '❌ Bot is not connected to a voice channel.',
+      ephemeral: true // Only visible to the user
+      });
+      return;
+    }
+
+    try {
+      await startKEKL(connection, process.env.GENERAL_VC_ID, rest); // 1 minute countdown
+      await interaction.reply('✅ KEKL countdown started!');
+    } catch (err) {
+      console.error('Failed to start KEKL:', err);
+      await interaction.reply('❌ Failed to start KEKL countdown.');
+    }
+}});
 
 /////////////////////////////////////////////////////////////
 // Message on schedule test
