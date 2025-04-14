@@ -5,10 +5,10 @@ import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'di
 import {
   joinVoiceChannel,
   VoiceConnectionStatus,
-  entersState
+  entersState,
+  getVoiceConnection
 } from '@discordjs/voice';
 import { startKEKL } from './kekl.js';
-const { getVoiceConnection } = require('@discordjs/voice');
 
 const commands = [
   new SlashCommandBuilder()
