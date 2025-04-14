@@ -48,13 +48,15 @@ client.login(process.env.DISCORD_TOKEN);
 client.on('error', console.error);
 client.on('shardError', console.error);
 
+let connection = null;
+
 /////////////////////////////////////////////////////////////
 // Join VC command
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
   if (interaction.commandName === 'joinvc') {
     try {
-      const connection = joinVoiceChannel({
+      connection = joinVoiceChannel({
         channelId: process.env.GENERAL_VC_ID,
         guildId: interaction.guild.id,
         adapterCreator: interaction.guild.voiceAdapterCreator
@@ -67,12 +69,6 @@ client.on('interactionCreate', async interaction => {
       await interaction.reply('❌ Failed to join VC');
     }
   } else if (interaction.commandName === 'beginkekl') {
-    const connection = joinVoiceChannel({
-      channelId: process.env.GENERAL_VC_ID,
-      guildId: interaction.guild.id,
-      adapterCreator: interaction.guild.voiceAdapterCreator
-    });
-
     if (connection.state.status !== VoiceConnectionStatus.Ready) {
       await interaction.reply({
       content: '❌ Bot is not connected to a voice channel.',
