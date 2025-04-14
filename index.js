@@ -45,7 +45,6 @@ const client = new Client({
   ],
   partials: ['CHANNEL'], // 👈 Required for DMs!
 });
-client.login(process.env.DISCORD_TOKEN);
 
 client.on('error', console.error);
 client.on('shardError', console.error);
@@ -164,6 +163,7 @@ client.on('messageCreate', async (message) => {
 // });
 
 
+client.login(process.env.DISCORD_TOKEN);
 
 
 // Ensure Railway doesn't shut the process down
