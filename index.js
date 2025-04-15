@@ -54,6 +54,7 @@ client.on('shardError', console.error);
 // Join VC command
 client.on('interactionCreate', async interaction => {
   // Check if the interaction is a command and if the user has the required role
+  console.dir(interaction.member.roles.cache);
   if (!interaction.isChatInputCommand()) return;
   if (!interaction.member.roles.cache.has(process.env.ALLOWED_ROLE_ID)) {
     return interaction.reply({
