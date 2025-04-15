@@ -8,7 +8,7 @@ export async function startKEKL(connection, channelId, rest) {
     const preMap = 6; // 1 minute
     const mapping = 6; // 15 minutes
     const validating = 6; // 5 minutes
-    const timessUp = 0; 
+    const timessUp = 0;  
   
     const labels = [
       'Launch Map Editor -',
