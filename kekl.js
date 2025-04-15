@@ -1,14 +1,10 @@
 import { playSoundEffect } from "./audio.js";
 
 export async function startKEKL(connection, channelId, rest) {
-    // const preMap = 60; // 1 minute
-    // const mapping = 60 * 15; // 15 minutes
-    // const validating = 300; // 5 minutes
-    // const timessUp = 0; 
-    const preMap = 6; // 1 minute
-    const mapping = 6; // 15 minutes
-    const validating = 6; // 5 minutes
-    const timessUp = 0;  
+    const preMap = 10; // 10 seconds
+    const mapping = 60 * 15; // 15 minutes
+    const validating = 300; // 5 minutes
+    const timessUp = 0; 
   
     const labels = [
       'Launch Map Editor -',
