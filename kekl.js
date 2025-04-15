@@ -34,7 +34,10 @@ export async function startKEKL(connection, channelId, rest) {
       const interval = setInterval(async () => {
         const minutes = Math.floor(time / 60);
         const seconds = time % 60;
-        const display = time == 0 ? `${minutes}:${seconds.toString().padStart(2, '0')} remaining`: "";
+        let display = `${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
+        if (time == 0) {
+          display = '';
+        }
   
         try {
           await rest.put(`/channels/${channelId}/voice-status`, {
