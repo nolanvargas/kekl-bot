@@ -61,6 +61,9 @@ export async function startKEKL(connection, channelId, rest) {
           playSoundEffect(connection, channelId, sound).catch(console.error);
           clearInterval(interval);
           resolve();
+        } else if (time < 0) {
+          clearInterval(interval);
+          resolve();
         }
       }, 1000);
     });
