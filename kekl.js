@@ -22,7 +22,7 @@ export async function startKEKL(connection, channelId, rest) {
       'endTime.mp3',
       ''
     ];
-    const durations = [preMap, mapping, validating];
+    const durations = [preMap, mapping, validating, timessUp];
   
     for (let i = 0; i < labels.length; i++) {
       await loadStatus(connection, channelId, rest, labels[i], durations[i], sounds[i]);
@@ -34,7 +34,7 @@ export async function startKEKL(connection, channelId, rest) {
       const interval = setInterval(async () => {
         const minutes = Math.floor(time / 60);
         const seconds = time % 60;
-        const display = `${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
+        const display = time == 0 ? `${minutes}:${seconds.toString().padStart(2, '0')} remaining`: "";
   
         try {
           await rest.put(`/channels/${channelId}/voice-status`, {
