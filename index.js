@@ -93,10 +93,8 @@ client.on('interactionCreate', async interaction => {
 client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
   
-  // const wednesdayHour = 14; // 2 PM PST
-  // const wednesdayMinute = 45;
-  const wednesdayHour = 12; // 2 PM PST
-  const wednesdayMinute = 10;
+  const wednesdayHour = 14; // 2 PM PST
+  const wednesdayMinute = 45;
   const saturdayHour = 18; // 6 PM PST
   const saturdayMinute = 0;
   const channelId = process.env.GENERAL_CHANNEL_ID;
@@ -105,8 +103,7 @@ client.once('ready', () => {
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
     console.log(`[${now.toLocaleTimeString()}] Checking time...`);
 
-    // const isWednesday = now.getDay() === 3; // Wednesday
-    const isWednesday = now.getDay() === 2; // Wednesday
+    const isWednesday = now.getDay() === 3; // Wednesday
     const isSaturday = now.getDay() === 6; // Saturday
 
     if (
