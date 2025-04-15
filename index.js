@@ -53,7 +53,14 @@ client.on('shardError', console.error);
 /////////////////////////////////////////////////////////////
 // Join VC command
 client.on('interactionCreate', async interaction => {
+  // Check if the interaction is a command and if the user has the required role
   if (!interaction.isChatInputCommand()) return;
+  if (!interaction.member.roles.cache.has(process.env.ALLOWED_ROLE_ID)) {
+    return interaction.reply({
+      content: '🚫 You don’t have permission to use this command.',
+      ephemeral: true
+    });
+  }
   if (interaction.commandName === 'joinvc') {
     try {
       const connection = joinVoiceChannel({
