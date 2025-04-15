@@ -89,24 +89,36 @@ client.on('interactionCreate', async interaction => {
 }});
 
 /////////////////////////////////////////////////////////////
-// Message on schedule test
+// Message on schedule
 client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
   
-  const targetHour = 11;  // 11 AM PST
-  const targetMinute = 23;
+  // const wednesdayHour = 14; // 2 PM PST
+  // const wednesdayMinute = 45;
+  const wednesdayHour = 12; // 2 PM PST
+  const wednesdayMinute = 0;
+  const saturdayHour = 18; // 6 PM PST
+  const saturdayMinute = 0;
   const channelId = process.env.GENERAL_CHANNEL_ID;
-  
+
   setInterval(async () => {
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
     console.log(`[${now.toLocaleTimeString()}] Checking time...`);
-    
-    if (now.getHours() === targetHour && now.getMinutes() === targetMinute) {
+
+    // const isWednesday = now.getDay() === 3; // Wednesday
+    const isWednesday = now.getDay() === 2; // Wednesday
+    const isSaturday = now.getDay() === 6; // Saturday
+
+    if (
+      (isWednesday && now.getHours() === wednesdayHour && now.getMinutes() === wednesdayMinute) ||
+      (isSaturday && now.getHours() === saturdayHour && now.getMinutes() === saturdayMinute)
+    ) {
       console.log('🎯 Time match — sending message...');
       try {
         const channel = await client.channels.fetch(channelId);
         if (channel) {
-          await channel.send('It’s go time in <t:1744482600:R> 🚀');
+          const oneHourLater = Math.floor(now.getTime() / 1000) + 3600; // Epoch time for 1 hour ahead
+          await channel.send(`@KEKL <t:${oneHourLater}:R> 🚀`);
         }
       } catch (err) {
         console.error('❌ Failed to send message:', err);
