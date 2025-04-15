@@ -96,7 +96,7 @@ client.once('ready', () => {
   // const wednesdayHour = 14; // 2 PM PST
   // const wednesdayMinute = 45;
   const wednesdayHour = 12; // 2 PM PST
-  const wednesdayMinute = 4;
+  const wednesdayMinute = 8;
   const saturdayHour = 18; // 6 PM PST
   const saturdayMinute = 0;
   const channelId = process.env.GENERAL_CHANNEL_ID;
@@ -117,7 +117,7 @@ client.once('ready', () => {
       try {
         const channel = await client.channels.fetch(channelId);
         if (channel) {
-          const oneHourLater = Math.floor(now.getTime() / 1000) + 3600; // Epoch time for 1 hour ahead
+          const oneHourLater = Math.floor(now.getTime() / 1000) + 3600 + 21600; // Epoch time for 1 hour ahead. 21600 is the offset for PST
           console.log(oneHourLater);
           await channel.send(`@KEKL <t:${oneHourLater}:R> 🚀`);
         }
