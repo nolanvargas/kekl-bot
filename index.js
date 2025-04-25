@@ -99,7 +99,16 @@ client.on('interactionCreate', async interaction => {
       console.error('Failed to start KEKL:', err);
       await interaction.reply('❌ Failed to start KEKL countdown.');
     }
-}});
+  } else if (interaction.commandName === 'disconnect') {
+    const connection = getVoiceConnection(interaction.guild.id);
+    if (connection) {
+      connection.destroy();
+      await interaction.reply('✅ Disconnected from voice channel.');
+    } else {
+      await interaction.reply('❌ Not connected to any voice channel.');
+    }
+  }
+});
 
 /////////////////////////////////////////////////////////////
 // Message on schedule
