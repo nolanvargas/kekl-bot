@@ -62,7 +62,8 @@ client.on('interactionCreate', async interaction => {
     console.log('❌ Not a command interaction');
     return;
   }
-  console.dir(interaction).members.roles;
+  console.dir("ROLES1", interaction.user.roles)
+  console.dir("ROLES2", interaction.member.roles)
   if (!interaction.member.roles.has(process.env.ALLOWED_ROLE_ID)) {
     console.log('❌ User does not have the required role');
     return interaction.reply({
