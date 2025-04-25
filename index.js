@@ -76,10 +76,10 @@ client.on('interactionCreate', async interaction => {
       });
       
       await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
-      await interaction.reply(`✅ Joined General VC`);
+      await interaction.reply({content: `✅ Joined General VC`, ephemeral: true});
     } catch (err) {
       console.error('Failed to join VC:', err);
-      await interaction.reply('❌ Failed to join VC');
+      await interaction.reply({content: '❌ Failed to join VC', ephemeral: true});
     }
   } else if (interaction.commandName === 'beginkekl') {
     const connection = getVoiceConnection(interaction.guild.id);
@@ -94,18 +94,18 @@ client.on('interactionCreate', async interaction => {
 
     try {
       startKEKL(connection, process.env.GENERAL_VC_ID, rest); // 1 minute countdown
-      await interaction.reply('✅ KEKL countdown started!');
+      await interaction.reply({content: '✅ KEKL countdown started!', ephemeral: true});
     } catch (err) {
       console.error('Failed to start KEKL:', err);
-      await interaction.reply('❌ Failed to start KEKL countdown.');
+      await interaction.reply({content: '❌ Failed to start KEKL countdown.', ephemeral: true});
     }
   } else if (interaction.commandName === 'disconnect') {
     const connection = getVoiceConnection(interaction.guild.id);
     if (connection) {
       connection.destroy();
-      await interaction.reply('✅ Disconnected from voice channel.');
+      await interaction.reply({content: '✅ Disconnected from voice channel.', ephemeral: true});
     } else {
-      await interaction.reply('❌ Not connected to any voice channel.');
+      await interaction.reply({content: '❌ Not connected to any voice channel.', ephemeral: true});
     }
   }
 });
