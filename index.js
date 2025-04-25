@@ -18,6 +18,10 @@ const commands = [
   new SlashCommandBuilder()
     .setName('beginkekl')
     .setDescription('Start the KEKL countdown in the current voice channel')
+    .toJSON(),
+  new SlashCommandBuilder()
+    .setName('disconnect')
+    .setDescription('Disconnect the bot from the voice channel')
     .toJSON()
 ];
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
