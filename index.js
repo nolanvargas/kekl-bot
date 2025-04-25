@@ -63,7 +63,7 @@ client.on('interactionCreate', async interaction => {
     return;
   }
     
-  if (!interaction.member.roles.cache.has(process.env.ALLOWED_ROLE_ID)) {
+  if (!interaction.member.roles.has(process.env.ALLOWED_ROLE_ID)) {
     console.log('❌ User does not have the required role');
     return interaction.reply({
       content: '🚫 You don’t have permission to use this command.',
